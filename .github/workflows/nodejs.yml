@@ -27,10 +27,13 @@ jobs:
         yarn build
         yarn test --coverage
         bash <(curl -s https://codecov.io/bash)
-        echo ${{ toJson(github) }}
-        echo ${{ toJson(matrix) }}
+        echo "$GITHUB_STUFF"
+        echo "$MATRIX_STUFF"
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        MATRIX_STUFF: ${{ toJson(matrix) }}
+        GITHUB_STUFF: ${{ toJson(github) }}
+
     - name: release
       if: github.ref == 'master' && matrix['node-version'] == '12.x'
       run: yarn release
