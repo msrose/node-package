@@ -27,8 +27,8 @@ jobs:
         yarn build
         yarn test --coverage
         bash <(curl -s https://codecov.io/bash)
-        echo ${{ github.ref }}
-        echoh ${{ matrix['node-version'] }}
+        echo ${{ toJson(github) }}
+        echo ${{ toJson(matrix) }}
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - name: release
