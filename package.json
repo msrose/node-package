@@ -1,6 +1,6 @@
 {
   "name": "@msrose/node-package",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "repository": "git@github.com:msrose/node-package.git",
   "author": "Michael Rose <michael_rose@outlook.com>",
