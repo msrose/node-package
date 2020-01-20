@@ -2,6 +2,9 @@ name: Node CI
 
 on: [push]
 
+env:
+  CI: true
+
 jobs:
   build:
 
@@ -17,13 +20,22 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install, build, and test
-      run: |
-        yarn install --frozen-lockfile
-        yarn lint
-        yarn build
-        yarn test --coverage
-        bash <(curl -s https://codecov.io/bash)
+    - name: install
+      run: yarn install --frozen-lockfile
+    - name: lint
+      run: yarn lint
+    - name: test
+      run: yarn test --coverage
+    - name: upload coverage
+      if: matrix['node-version'] == '12.x'
+      run: bash <(curl -s https://codecov.io/bash)
       env:
-        CI: true
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: build
+      run: yarn build
+    - name: release
+      if: github.ref == 'refs/heads/master' && matrix['node-version'] == '12.x'
+      run: yarn release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
