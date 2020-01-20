@@ -2,6 +2,9 @@ name: Node CI
 
 on: [push]
 
+env:
+  CI: true
+
 jobs:
   build:
 
@@ -24,6 +27,13 @@ jobs:
         yarn build
         yarn test --coverage
         bash <(curl -s https://codecov.io/bash)
+        echo ${{ github.ref }}
+        echoh ${{ matrix['node-version'] }}
       env:
-        CI: true
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: release
+      if: github.ref == 'master' && matrix['node-version'] == '12.x'
+      run: yarn release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

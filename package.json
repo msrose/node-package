@@ -1,5 +1,5 @@
 {
-  "name": "node-package",
+  "name": "@msrose/node-package",
   "version": "1.0.0",
   "main": "lib/index.js",
   "repository": "git@github.com:msrose/node-package.git",
@@ -10,9 +10,12 @@
     "lint": "eslint .",
     "build": "babel src -d lib --copy-files",
     "clean": "rm -rf lib",
-    "prepack": "yarn clean && yarn build"
+    "prepack": "yarn clean && yarn build",
+    "release": "semantic-release"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
@@ -24,6 +27,7 @@
     "eslint-plugin-jest": "^23.6.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "semantic-release": "^16.0.2"
   }
 }
